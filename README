@@ -1,8 +1,13 @@
-= Exception Notifier Plugin for Rails
+= GMail Notifier Plugin for Rails
 
-The Exception Notifier plugin provides a mailer object and a default set of
-templates for sending email notifications when errors occur in a Rails
-application. The plugin is configurable, allowing programmers to specify:
+This is a slight modification of The Exception Notifier plugin which 
+provides a mailer object and a default set of templates for sending 
+email notifications when errors occur in a Rails application. 
+
+This plugin comes with the files needed to connect with gmail smtp and 
+a generator to create the basic settings.
+
+The plugin is configurable, allowing programmers to specify:
 
 * the sender address of the email
 * the recipient addresses
@@ -13,7 +18,20 @@ environment, and also gives a backtrace of the exception.
 
 == Usage
 
-First, include the ExceptionNotifiable mixin in whichever controller you want
+First, run the gmail_notifier generator which creates email.rb in the 
+config/initializers/ directory.
+
+ ./script/generate gmail_notifier
+ 
+Then, edit email.rb with your gmail or google apps settings:
+
+  :domain => "gmail.com", # Set this to your domain if you are using google apps
+  :user_name => "user@gmail.com", # This should be your full email address 
+  :password => ""
+
+  ExceptionNotifier.exception_recipients = %w(joe@schmoe.com bill@schmoe.com)
+
+Be sure to include the ExceptionNotifiable mixin in whichever controller you want
 to generate error emails (typically ApplicationController):
 
   class ApplicationController < ActionController::Base
@@ -21,15 +39,11 @@ to generate error emails (typically ApplicationController):
     ...
   end
 
-Then, specify the email recipients in your environment:
-
-  ExceptionNotifier.exception_recipients = %w(joe@schmoe.com bill@schmoe.com)
-
 And that's it! The defaults take care of the rest.
 
 == Configuration
 
-You can tweak other values to your liking, as well. In your environment file,
+You can tweak other values to your liking, as well. In your email.rb file,
 just set any or all of the following values:
 
   # defaults to exception.notifier@default.com

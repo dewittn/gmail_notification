@@ -5,7 +5,7 @@ ActionMailer::Base.smtp_settings = {
   :address => "smtp.gmail.com",
   :port => 587,
   :authentication => :plain,
-  :domain => "gmail.com", # Set this to your domain is you are using google apps
+  :domain => "gmail.com", # Set this to your domain if you are using google apps
   :user_name => "user@gmail.com", # This should be your full email address 
   :password => ""
 }
